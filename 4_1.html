@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>م. محمد سلامة | الدرس 4-1: أنواع الوسائط وخصائصها</title>
+  
+  <!-- استيراد خط Cairo من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- استيراد Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+          },
+          boxShadow: {
+            'mono': '0 4px 20px -2px rgba(0, 0, 0, 0.08)',
+            'mono-lg': '0 10px 30px -5px rgba(0, 0, 0, 0.14)',
+            'mono-hard': '4px 4px 0px 0px #000000',
+            'mono-hard-sm': '2px 2px 0px 0px #000000',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* إعدادات عامة وتصميم أحادي اللون صارم */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #fafafa;
+      color: #0a0a0a;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* خلفية شبكية هندسية خفيفة أحادية اللون */
+    .geo-grid {
+      background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* تخصيص شريط التمرير */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f4f4f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #71717a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #18181b;
+    }
+
+    /* تأثيرات الانتقال */
+    .fade-in {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* إخفاء شريط التمرير الأفقي للتبويبات في الموبايل مع إبقاء التمرير متاحاً */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* تنسيقات الطباعة (Print-ready monochrome layout) للشهادة وبطاقة الدرجات */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-certificate, #printable-certificate * {
+        visibility: visible;
+      }
+      #printable-certificate {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 24px;
+        box-shadow: none !important;
+        border: 3px solid #000000 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="geo-grid min-h-screen flex flex-col selection:bg-black selection:text-white">
+
+  <!-- ==================== 1. شاشة الترحيب وتسجيل اسم الطالب ==================== -->
+  <div id="welcome-screen" class="fixed inset-0 z-50 bg-white geo-grid flex items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-2xl bg-white border-2 border-black rounded-2xl shadow-mono-hard p-6 sm:p-10 my-auto fade-in">
+      
+      <!-- الشعار والهوية الهندسية -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b-2 border-zinc-200">
+        <div class="flex items-center gap-3.5">
+          <!-- شعار SVG هندسي أحادي اللون -->
+          <div class="w-14 h-14 bg-black text-white rounded-xl flex items-center justify-center shrink-0 shadow-mono">
+            <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="4" y="4" width="24" height="24" rx="4" />
+              <path d="M10 12L14 16L10 20" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="16" y1="20" x2="22" y2="20" stroke-linecap="round" />
+              <circle cx="23" cy="9" r="1.5" fill="currentColor" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-xs font-bold tracking-wider uppercase text-zinc-500">منصة المراجعة التفاعلية</div>
+            <h2 class="text-lg sm:text-xl font-black text-black">م. محمد سلامة</h2>
+            <p class="text-xs sm:text-sm font-semibold text-zinc-600">البرمجة والذكاء الاصطناعي</p>
+          </div>
+        </div>
+        <div class="px-3.5 py-1.5 bg-zinc-100 border border-zinc-300 rounded-lg text-xs font-bold text-zinc-800">
+          الصف الثاني الثانوي • 2026 / 2027
+        </div>
+      </div>
+
+      <!-- عنوان الوحدة والدرس -->
+      <div class="py-7 text-center sm:text-right">
+        <span class="inline-block px-3 py-1 bg-black text-white text-xs font-bold rounded-md mb-3">
+          الوحدة الرابعة: تصميم الويب والوسائط
+        </span>
+        <h1 class="text-2xl sm:text-4xl font-black text-black leading-tight mb-3">
+          الدرس 4-1: أنواع الوسائط وخصائصها
+        </h1>
+        <p class="text-sm sm:text-base text-zinc-600 leading-relaxed">
+          بيئة تعليمية هندسية متكاملة لاستيعاب خصائص الوسائط الرقمية والتقليدية، محاكاة اختيار الوسيلة المثالية، حل تحديات التفكير الهندسي، والحصول على بطاقة درجات موثقة.
+        </p>
+      </div>
+
+      <!-- نموذج إدخال اسم الطالب -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="student-name-input" class="block text-sm font-bold text-black mb-2">
+            أدخل اسمك الكامل (سيتم توثيقه في بطاقة الدرجات وشهادة الإتمام):
+          </label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="student-name-input" 
+              required
+              minlength="3"
+              placeholder="مثال: أحمد محمود عبد الرحمن" 
+              class="w-full px-4 py-3.5 bg-zinc-50 border-2 border-zinc-300 focus:border-black focus:bg-white rounded-xl text-base font-bold text-black placeholder-zinc-400 outline-none transition-all"
+            />
+          </div>
+          <p id="name-error" class="hidden text-xs font-bold text-black mt-2 bg-zinc-200 px-3 py-1.5 rounded-lg">
+            يرجى كتابة اسمك الثلاثي أو الكامل بشكل صحيح للمتابعة.
+          </p>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-4 px-6 bg-black hover:bg-zinc-800 active:translate-y-0.5 text-white font-extrabold text-base sm:text-lg rounded-xl shadow-mono-hard-sm transition-all flex items-center justify-center gap-3 cursor-pointer"
+        >
+          <span>ابدأ رحلة المراجعة التفاعلية</span>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- تذييل بطاقة الترحيب -->
+      <div class="mt-6 pt-4 border-t border-zinc-200 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500 font-semibold">
+        <span>إعداد وتطوير: المهندس محمد سلامة</span>
+        <span>تصميم أحادي اللون عالي التباين</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. رأس الصفحة (Sticky Header) وشريط التنقل ==================== -->
+  <header id="main-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-black shadow-mono hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- الشريط العلوي للهوية وبيانات الطالب -->
+      <div class="py-3 flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200">
+        <!-- الهوية -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-black text-white rounded-lg flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="4" y="4" width="24" height="24" rx="4" />
+              <path d="M10 12L14 16L10 20" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="16" y1="20" x2="22" y2="20" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-black text-sm sm:text-base text-black">م. محمد سلامة</span>
+              <span class="hidden sm:inline-block text-zinc-300">|</span>
+              <span class="hidden sm:inline-block text-xs font-bold text-zinc-600">البرمجة والذكاء الاصطناعي (2ث - 2026/2027)</span>
+            </div>
+            <p class="text-xs font-bold text-zinc-500">الوحدة 4 • الدرس 4-1: أنواع الوسائط وخصائصها</p>
+          </div>
+        </div>
+
+        <!-- بطاقة اسم الطالب وزر التعديل -->
+        <div class="flex items-center gap-2 bg-zinc-100 border border-zinc-300 rounded-xl px-3 py-1.5">
+          <svg class="w-4 h-4 text-black shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text-xs text-zinc-500 font-semibold hidden md:inline">الطالب:</span>
+          <span id="header-student-name" class="text-xs sm:text-sm font-extrabold text-black max-w-[140px] sm:max-w-[220px] truncate">اسم الطالب</span>
+          <button 
+            id="edit-name-btn" 
+            title="تعديل اسم الطالب"
+            class="mr-1 p-1.5 bg-white hover:bg-black hover:text-white border border-zinc-300 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- شريط التبويبات الأربعة -->
+      <nav aria-label="أقسام المراجعة" class="flex items-center gap-2 py-2.5 overflow-x-auto no-scrollbar">
+        <button data-tab="tab-1" class="tab-btn active-tab flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold whitespace-nowrap transition-all cursor-pointer bg-black text-white shadow-mono-hard-sm">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>1. الشرح والإنفوجرافيك</span>
+        </button>
+
+        <button data-tab="tab-2" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold whitespace-nowrap transition-all cursor-pointer bg-zinc-100 text-zinc-700 hover:bg-zinc-200 border border-zinc-300">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>2. مقارنة الوسائط التفاعلية</span>
+        </button>
+
+        <button data-tab="tab-3" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold whitespace-nowrap transition-all cursor-pointer bg-zinc-100 text-zinc-700 hover:bg-zinc-200 border border-zinc-300">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          <span>3. تحديات وتفكير هندسي</span>
+        </button>
+
+        <button data-tab="tab-4" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold whitespace-nowrap transition-all cursor-pointer bg-zinc-100 text-zinc-700 hover:bg-zinc-200 border border-zinc-300">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M9 11l3 3L22 4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>4. الاختبار الشامل وبطاقة الدرجات</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- نافذة منبثقة لتعديل اسم الطالب (بديل مخصص لـ prompt/alert) -->
+  <div id="edit-name-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white border-2 border-black rounded-2xl shadow-mono-hard max-w-md w-full p-6 fade-in">
+      <h3 class="text-lg font-black text-black mb-2">تعديل اسم الطالب</h3>
+      <p class="text-xs text-zinc-600 mb-4">سيتم تحديث الاسم فوراً في الرأس وبطاقة الدرجات والشهادة.</p>
+      <input 
+        type="text" 
+        id="modal-name-input" 
+        class="w-full px-4 py-3 bg-zinc-50 border-2 border-zinc-300 focus:border-black rounded-xl text-sm font-bold text-black outline-none mb-4"
+        placeholder="أدخل الاسم الجديد..."
+      />
+      <div class="flex items-center justify-end gap-2">
+        <button id="cancel-edit-name" class="px-4 py-2.5 bg-zinc-100 hover:bg-zinc-200 text-black text-xs font-bold rounded-xl cursor-pointer">
+          إلغاء
+        </button>
+        <button id="save-edit-name" class="px-5 py-2.5 bg-black hover:bg-zinc-800 text-white text-xs font-bold rounded-xl cursor-pointer">
+          حفظ التعديل
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== المحتوى الرئيسي للتطبيق ==================== -->
+  <main id="main-content" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden">
+
+    <!-- ========================================================================= -->
+    <!-- التبويب الأول: الشرح والإنفوجرافيك                                        -->
+    <!-- ========================================================================= -->
+    <section id="tab-1" class="tab-panel space-y-10 fade-in">
+      
+      <!-- 1.1 السؤال الرئيسي وأهداف التعلم -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- السؤال الرئيسي -->
+        <div class="lg:col-span-7 bg-black text-white rounded-2xl p-6 sm:p-8 shadow-mono-lg flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute -left-10 -bottom-10 w-44 h-44 border border-zinc-800 rounded-full pointer-events-none"></div>
+          <div class="absolute -left-4 -bottom-4 w-28 h-28 border border-zinc-700 rounded-full pointer-events-none"></div>
+          
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-lg text-xs font-bold text-zinc-200 mb-4">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              <span>السؤال الرئيسي للدرس</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black leading-snug mb-6">
+              "ما هي نقاط القوة والقيود في الوسائط المختلفة، وكيف تختار الوسيلة المناسبة لغرض وجمهور معينين؟"
+            </h2>
+          </div>
+
+          <!-- الفكرة المحورية في جملة واحدة -->
+          <div class="bg-white text-black rounded-xl p-4 sm:p-5 border-2 border-zinc-300">
+            <div class="text-xs font-black uppercase tracking-wider text-zinc-500 mb-1">الفكرة المحورية للدرس</div>
+            <p class="text-sm sm:text-base font-extrabold leading-relaxed">
+              تختلف الوسائط الإعلامية في نوع المعلومات التي تنقلها واتجاه الاتصال، ويتطلب التواصل الفعّال اختيار الوسيلة الأنسب أو دمج عدة وسائل معاً بناءً على الهدف وخصائص الجمهور المستهدف.
+            </p>
+          </div>
+        </div>
+
+        <!-- أهداف التعلم -->
+        <div class="lg:col-span-5 bg-white border-2 border-black rounded-2xl p-6 sm:p-8 shadow-mono-hard">
+          <div class="flex items-center gap-3 mb-5 pb-3 border-b-2 border-zinc-100">
+            <div class="w-10 h-10 bg-zinc-900 text-white rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-black text-black">أهداف التعلم</h3>
+              <p class="text-xs text-zinc-500 font-semibold">ما ستتقنه بنهاية هذا الدرس</p>
+            </div>
+          </div>
+
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-md bg-black text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">1</span>
+              <p class="text-sm font-bold text-zinc-800 leading-relaxed">
+                التمييز بين أنواع الوسائط الرئيسية (التلفزيون، الراديو، الصحيفة، الموقع الإلكتروني، وسائل التواصل الاجتماعي) من حيث المحتوى واتجاه الاتصال.
+              </p>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-md bg-black text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">2</span>
+              <p class="text-sm font-bold text-zinc-800 leading-relaxed">
+                تحليل نقاط القوة الخمس والقيود الثلاثة للمواقع الإلكترونية مقارنة بالوسائط الأخرى.
+              </p>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-md bg-black text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">3</span>
+              <p class="text-sm font-bold text-zinc-800 leading-relaxed">
+                اختيار الوسيلة المناسبة وفقاً للغرض (الإعلام العام، التفاصيل، التخصيص، التناقل الشفهي) وتصميم خطة تكامل بين الوسائط (Media Mix).
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 1.2 إنفوجرافيك الوسائط الخمس الرئيسية -->
+      <div>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-500">تحليل الوسائط الخمس</span>
+            <h2 class="text-2xl font-black text-black">الوسائط الرئيسية وخصائصها</h2>
+          </div>
+          <div class="flex items-center gap-3 text-xs font-bold">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-zinc-200 text-black rounded-lg">
+              <span class="w-2 h-2 rounded-full bg-zinc-600"></span> اتصال أحادي الاتجاه
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-black text-white rounded-lg">
+              <span class="w-2 h-2 rounded-full bg-white"></span> اتصال ثنائي الاتجاه
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- 1. التلفزيون -->
+          <div class="bg-white border-2 border-zinc-300 hover:border-black rounded-2xl p-6 shadow-mono transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-zinc-100 border border-zinc-300 rounded-xl flex items-center justify-center text-black">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
+                    <polyline points="17 2 12 7 7 2"/>
+                  </svg>
+                </div>
+                <span class="px-3 py-1 bg-zinc-200 text-zinc-900 text-xs font-extrabold rounded-lg">
+                  أحادي الاتجاه ←
+                </span>
+              </div>
+              <h3 class="text-xl font-black text-black mb-2">1. التلفزيون (Television)</h3>
+              <div class="mb-4">
+                <span class="text-xs font-bold text-zinc-500 block mb-1">المعلومات المنقولة:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2.5 py-0.5 bg-zinc-100 border border-zinc-300 rounded text-xs font-bold">فيديو متحرك</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-100 border border-zinc-300 rounded text-xs font-bold">صوت</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-100 border border-zinc-300 rounded text-xs font-bold">نصوص وصور</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-zinc-200">
+              <span class="text-xs font-bold text-zinc-500 block mb-1.5">أبرز الخصائص:</span>
+              <ul class="text-xs sm:text-sm text-zinc-700 space-y-1.5 font-medium list-disc list-inside">
+                <li>يصل إلى جمهور عريض جداً في وقت واحد (بث جماهيري).</li>
+                <li>تأثير بصري وسمعي قوي يجذب الانتباه بسهولة.</li>
+                <li>تواصل من طرف واحد (المرسل للمشاهد) دون تفاعل مباشر.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 2. الراديو -->
+          <div class="bg-white border-2 border-zinc-300 hover:border-black rounded-2xl p-6 shadow-mono transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-zinc-100 border border-zinc-300 rounded-xl flex items-center justify-center text-black">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="2"/>
+                    <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+                  </svg>
+                </div>
+                <span class="px-3 py-1 bg-zinc-200 text-zinc-900 text-xs font-extrabold rounded-lg">
+                  أحادي الاتجاه ←
+                </span>
+              </div>
+              <h3 class="text-xl font-black text-black mb-2">2. الراديو (Radio)</h3>
+              <div class="mb-4">
+                <span class="text-xs font-bold text-zinc-500 block mb-1">المعلومات المنقولة:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2.5 py-0.5 bg-zinc-100 border border-zinc-300 rounded text-xs font-bold">صوت فقط (مسموع)</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-zinc-200">
+              <span class="text-xs font-bold text-zinc-500 block mb-1.5">أبرز الخصائص:</span>
+              <ul class="text-xs sm:text-sm text-zinc-700 space-y-1.5 font-medium list-disc list-inside">
+                <li>لا يتطلب تركيزاً بصرياً؛ يمكن الاستماع إليه أثناء القيادة أو العمل.</li>
+                <li>سريع في نقل الأخبار العاجلة وحالة الطقس والمرور.</li>
+                <li>لا يعرض صوراً أو نصوصاً تفصيلية يسهل الرجوع إليها.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 3. الصحيفة -->
+          <div class="bg-white border-2 border-zinc-300 hover:border-black rounded-2xl p-6 shadow-mono transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-zinc-100 border border-zinc-300 rounded-xl flex items-center justify-center text-black">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+                    <path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>
+                  </svg>
+                </div>
+                <span class="px-3 py-1 bg-zinc-200 text-zinc-900 text-xs font-extrabold rounded-lg">
+                  أحادي الاتجاه ←
+                </span>
+              </div>
+              <h3 class="text-xl font-black text-black mb-2">3. الصحيفة (Newspaper)</h3>
+              <div class="mb-4">
+                <span class="text-xs font-bold text-zinc-500 block mb-1">المعلومات المنقولة:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2.5 py-0.5 bg-zinc-100 border border-zinc-300 rounded text-xs font-bold">نصوص مكتوبة</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-100 border border-zinc-300 rounded text-xs font-bold">صور ثابتة</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-zinc-200">
+              <span class="text-xs font-bold text-zinc-500 block mb-1.5">أبرز الخصائص:</span>
+              <ul class="text-xs sm:text-sm text-zinc-700 space-y-1.5 font-medium list-disc list-inside">
+                <li>تقدم تحليلات ومقالات معمقة وتفاصيل دقيقة يمكن قراءتها بتأنٍ.</li>
+                <li>لا تحتاج إلى إنترنت أو أجهزة إلكترونية لتصفحها.</li>
+                <li>محدودة المساحة وتصدر في أوقات ثابتة (يومية/أسبوعية).</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 4. الموقع الإلكتروني -->
+          <div class="bg-white border-2 border-black rounded-2xl p-6 shadow-mono-hard-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <span class="px-3 py-1 bg-black text-white text-xs font-extrabold rounded-lg">
+                  ثنائي الاتجاه ↔
+                </span>
+              </div>
+              <h3 class="text-xl font-black text-black mb-2">4. الموقع الإلكتروني (Website)</h3>
+              <div class="mb-4">
+                <span class="text-xs font-bold text-zinc-500 block mb-1">المعلومات المنقولة:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">نصوص</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">صور</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">صوت</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">فيديو</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-zinc-200">
+              <span class="text-xs font-bold text-zinc-500 block mb-1.5">أبرز الخصائص:</span>
+              <ul class="text-xs sm:text-sm text-zinc-700 space-y-1.5 font-medium list-disc list-inside">
+                <li>يدمج كافة أنواع الوسائط المتعددة في مكان واحد منظم.</li>
+                <li>تفاعلي (نماذج، بحث، حجز، شراء) ومتاح على مدار الساعة.</li>
+                <li>يعتمد على وصول المستخدم إليه عبر البحث أو الروابط.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 5. وسائل التواصل الاجتماعي -->
+          <div class="md:col-span-2 lg:col-span-2 bg-white border-2 border-black rounded-2xl p-6 shadow-mono-hard-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <span class="px-3 py-1 bg-black text-white text-xs font-extrabold rounded-lg">
+                  ثنائي الاتجاه وتفاعلي جماعي ↔
+                </span>
+              </div>
+              <h3 class="text-xl font-black text-black mb-2">5. وسائل التواصل الاجتماعي (Social Media)</h3>
+              <div class="mb-4">
+                <span class="text-xs font-bold text-zinc-500 block mb-1">المعلومات المنقولة:</span>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">منشورات نصية</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">صور</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">صوت</span>
+                  <span class="px-2.5 py-0.5 bg-zinc-900 text-white rounded text-xs font-bold">فيديو قصير وبث مباشر</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-4 border-t border-zinc-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <span class="text-xs font-bold text-zinc-500 block mb-1.5">أبرز الخصائص:</span>
+                <ul class="text-xs sm:text-sm text-zinc-700 space-y-1.5 font-medium list-disc list-inside">
+                  <li>تفاعل فوري (إعجاب، تعليق، مشاركة، رسائل خاصة).</li>
+                  <li>سرعة هائلة في الانتشار الفيروسي والتناقل الشفهي الرقمي.</li>
+                </ul>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-zinc-500 block mb-1.5">ملاحظة هندسية:</span>
+                <p class="text-xs sm:text-sm text-zinc-700 font-medium bg-zinc-100 p-3 rounded-xl border border-zinc-200">
+                  تُعد أداة مثالية لجذب الجمهور وتوجيهه نحو الموقع الإلكتروني الرسمي للحصول على التفاصيل الكاملة.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 1.3 نقاط القوة الخمس والقيود الثلاثة للمواقع الإلكترونية -->
+      <div class="bg-white border-2 border-black rounded-2xl p-6 sm:p-8 shadow-mono">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="px-3 py-1 bg-zinc-100 border border-zinc-300 rounded-lg text-xs font-extrabold text-zinc-800">محور أساسي في منهج تصميم الويب</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-black mt-2">نقاط القوة والقيود للمواقع الإلكترونية</h2>
+          <p class="text-xs sm:text-sm text-zinc-600 mt-1">لماذا ننشئ مواقع إلكترونية، وما التحديات التي تواجهها؟</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- نقاط القوة الخمس -->
+          <div class="bg-zinc-50 border-2 border-black rounded-2xl p-5 sm:p-6">
+            <div class="flex items-center gap-3 mb-5 pb-3 border-b border-zinc-300">
+              <div class="w-9 h-9 bg-black text-white rounded-lg flex items-center justify-center font-black text-lg">+</div>
+              <h3 class="text-lg sm:text-xl font-black text-black">نقاط القوة الخمس (5 Strengths)</h3>
+            </div>
+            <div class="space-y-3.5">
+              <div class="bg-white p-3.5 rounded-xl border border-zinc-300 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <div>
+                  <h4 class="text-sm font-black text-black">الجمع بين وسائط متعددة</h4>
+                  <p class="text-xs text-zinc-600 mt-0.5">دمج النصوص والصور والصوت والفيديو والروابط التفاعلية في صفحة واحدة.</p>
+                </div>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-zinc-300 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <div>
+                  <h4 class="text-sm font-black text-black">تقديم معلومات غنية وتفصيلية</h4>
+                  <p class="text-xs text-zinc-600 mt-0.5">لا توجد قيود صارمة على المساحة أو الوقت لعرض المواصفات والشروحات الكاملة.</p>
+                </div>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-zinc-300 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <div>
+                  <h4 class="text-sm font-black text-black">سهولة التحديث الفوري</h4>
+                  <p class="text-xs text-zinc-600 mt-0.5">يمكن تعديل الأسعار أو المواعيد أو البيانات في أي لحظة وتظهر للجميع فوراً.</p>
+                </div>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-zinc-300 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                <div>
+                  <h4 class="text-sm font-black text-black">التوافر الدائم والوصول العالمي (24/7)</h4>
+                  <p class="text-xs text-zinc-600 mt-0.5">يمكن لأي شخص حول العالم تصفح الموقع في أي وقت يناسبه دون التقيد بموعد بث.</p>
+                </div>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-zinc-300 flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">5</span>
+                <div>
+                  <h4 class="text-sm font-black text-black">التفاعلية وتبادل المعلومات</h4>
+                  <p class="text-xs text-zinc-600 mt-0.5">إمكانية البحث، ملء النماذج، التسجيل، والتواصل المباشر مع الجهة المالكة للموقع.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- القيود الثلاثة -->
+          <div class="bg-zinc-100 border-2 border-zinc-400 rounded-2xl p-5 sm:p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-5 pb-3 border-b border-zinc-300">
+                <div class="w-9 h-9 bg-zinc-700 text-white rounded-lg flex items-center justify-center font-black text-lg">!</div>
+                <h3 class="text-lg sm:text-xl font-black text-black">القيود الثلاثة (3 Limitations)</h3>
+              </div>
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-xl border border-zinc-300 flex items-start gap-3">
+                  <span class="w-6 h-6 rounded-full bg-zinc-700 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <div>
+                    <h4 class="text-sm font-black text-black">أسلوب "الجذب" لا "الدفع" (يتطلب بحث المستخدم)</h4>
+                    <p class="text-xs text-zinc-600 mt-1 leading-relaxed">
+                      الموقع الإلكتروني ينتظر من المستخدم أن يبحث عنه أو يزور رابطه؛ لذا قد لا يصل إلى الجمهور ما لم يتم الترويج له عبر وسائل أخرى.
+                    </p>
+                  </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-zinc-300 flex items-start gap-3">
+                  <span class="w-6 h-6 rounded-full bg-zinc-700 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <div>
+                    <h4 class="text-sm font-black text-black">اشتراط توفر الإنترنت وجهاز رقمي</h4>
+                    <p class="text-xs text-zinc-600 mt-1 leading-relaxed">
+                      لا يستطيع الأشخاص الذين لا يملكون اتصالاً بالإنترنت أو جهاز حاسوب/هاتف ذكي (مثل بعض كبار السن أو المناطق النائية) الوصول إليه.
+                    </p>
+                  </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-zinc-300 flex items-start gap-3">
+                  <span class="w-6 h-6 rounded-full bg-zinc-700 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                  <div>
+                    <h4 class="text-sm font-black text-black">تكلفة وجهد التصميم والتطوير والصيانة</h4>
+                    <p class="text-xs text-zinc-600 mt-1 leading-relaxed">
+                      يتطلب بناء موقع احترافي وتأمينه وتحديث محتواه بانتظام مهارات تقنية وتكاليف استضافة وصيانة مستمرة.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-black text-white rounded-xl text-xs leading-relaxed">
+              <span class="font-black underline">خلاصة هندسية:</span> للتغلب على القيد الأول (صعوبة وصول الجمهور للموقع بمفرده)، نستخدم <span class="font-extrabold">تكامل الوسائط (Media Mix)</span>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.4 اختيار الوسائل وفقاً للغرض وتكامل الوسائط -->
+      <div class="space-y-6">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-500">استراتيجية التواصل</span>
+          <h2 class="text-2xl font-black text-black">اختيار الوسائل وفقاً للغرض وتكامل الوسائط (Media Mix)</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-5 shadow-mono">
+            <div class="w-9 h-9 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mb-3">01</div>
+            <h4 class="text-base font-black text-black mb-2">إعلام عدد كبير في آنٍ واحد</h4>
+            <p class="text-xs text-zinc-600 mb-3 leading-relaxed">عند الرغبة في نشر رسالة عامة بسرعة لجمهور واسع جداً في نفس اللحظة.</p>
+            <div class="pt-2 border-t border-zinc-200 text-xs font-extrabold text-black">
+              الأنسب: التلفزيون، الراديو، الصحف الكبرى.
+            </div>
+          </div>
+
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-5 shadow-mono">
+            <div class="w-9 h-9 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mb-3">02</div>
+            <h4 class="text-base font-black text-black mb-2">تقديم معلومات تفصيلية</h4>
+            <p class="text-xs text-zinc-600 mb-3 leading-relaxed">عند الحاجة لشرح مواصفات تقنية، جداول مواعيد، أو شروط اشتراك بدقة.</p>
+            <div class="pt-2 border-t border-zinc-200 text-xs font-extrabold text-black">
+              الأنسب: الموقع الإلكتروني، الكتيبات/الصحف.
+            </div>
+          </div>
+
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-5 shadow-mono">
+            <div class="w-9 h-9 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mb-3">03</div>
+            <h4 class="text-base font-black text-black mb-2">إيصال المعلومات لأشخاص محددين</h4>
+            <p class="text-xs text-zinc-600 mb-3 leading-relaxed">عند مخاطبة فئة معينة بدقة (مثل طلاب مدرسة، مرضى مسجلين، أو عملاء).</p>
+            <div class="pt-2 border-t border-zinc-200 text-xs font-extrabold text-black">
+              الأنسب: البريد الإلكتروني، الرسائل النصية، الإشعارات.
+            </div>
+          </div>
+
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-5 shadow-mono">
+            <div class="w-9 h-9 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mb-3">04</div>
+            <h4 class="text-base font-black text-black mb-2">الانتشار بالتناقل الشفهي</h4>
+            <p class="text-xs text-zinc-600 mb-3 leading-relaxed">تحفيز الجمهور على مشاركة المحتوى والتوصية به لأصدقائهم تلقائياً.</p>
+            <div class="pt-2 border-t border-zinc-200 text-xs font-extrabold text-black">
+              الأنسب: وسائل التواصل الاجتماعي.
+            </div>
+          </div>
+        </div>
+
+        <!-- مخطط إنفوجرافيك: تكامل الوسائط (Media Mix) -->
+        <div class="bg-zinc-900 text-white rounded-2xl p-6 sm:p-8 shadow-mono-lg">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <span class="px-3 py-1 bg-white text-black text-xs font-black rounded-md">مفهوم تكامل الوسائط (Media Mix)</span>
+              <h3 class="text-xl sm:text-2xl font-black mt-2">كيف تعمل الوسائط معاً في منظومة واحدة؟</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-300 max-w-md">
+              بدلاً من الاعتماد على وسيلة واحدة، نستخدم كل وسيلة في نقطة قوتها لتكمل الأخرى وتحقق أعلى وصول وتفاعل.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+            <!-- الخطوة 1 -->
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl p-5 relative">
+              <div class="text-xs font-bold text-zinc-400 mb-1">المرحلة 1: جذب الانتباه العام</div>
+              <h4 class="text-base font-black text-white mb-2">إعلان تلفزيوني أو ملصق</h4>
+              <p class="text-xs text-zinc-300 leading-relaxed">
+                يصل إلى ملايين المشاهدين في ثوانٍ معدودة ويعرض فكرة جذابة مع رمز QR أو اسم الموقع للبحث عنه.
+              </p>
+            </div>
+
+            <!-- الخطوة 2 -->
+            <div class="bg-white text-black border-2 border-white rounded-xl p-5 relative">
+              <div class="text-xs font-bold text-zinc-500 mb-1">المرحلة 2: التفاصيل والتسجيل</div>
+              <h4 class="text-base font-black text-black mb-2">الموقع الإلكتروني الرسمي</h4>
+              <p class="text-xs text-zinc-700 leading-relaxed font-medium">
+                يستقبل الزوار القادمين من الإعلان، ويقدم لهم كافة التفاصيل، الفيديوهات الشارحة، ونموذج التسجيل أو الشراء.
+              </p>
+            </div>
+
+            <!-- الخطوة 3 -->
+            <div class="bg-zinc-800 border border-zinc-700 rounded-xl p-5 relative">
+              <div class="text-xs font-bold text-zinc-400 mb-1">المرحلة 3: التفاعل والانتشار</div>
+              <h4 class="text-base font-black text-white mb-2">وسائل التواصل الاجتماعي</h4>
+              <p class="text-xs text-zinc-300 leading-relaxed">
+                يشارك المستخدمون تجاربهم وآراءهم حول الخدمة، مما يولد انتشاراً واسعاً بالتناقل الشفهي ويجذب زواراً جدداً.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- التبويب الثاني: مقارنة الوسائط التفاعلية ومحاكي اختيار الوسيلة            -->
+    <!-- ========================================================================= -->
+    <section id="tab-2" class="tab-panel space-y-10 hidden fade-in">
+
+      <!-- 2.1 جدول المقارنة التفاعلي القابل للتصفية -->
+      <div class="bg-white border-2 border-black rounded-2xl p-6 sm:p-8 shadow-mono">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b-2 border-zinc-100">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-500">أداة التحليل والمقارنة</span>
+            <h2 class="text-2xl font-black text-black">جدول مقارنة الوسائط التفاعلي</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 mt-1">قم بتصفية الوسائط حسب نوع المحتوى، اتجاه الاتصال، أو الحاجة للإنترنت.</p>
+          </div>
+
+          <!-- أزرار التصفية -->
+          <div class="flex flex-wrap gap-2">
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-500 mb-1">نوع المحتوى:</label>
+              <select id="filter-content" class="px-3 py-2 bg-zinc-50 border-2 border-zinc-300 focus:border-black rounded-xl text-xs font-extrabold text-black outline-none cursor-pointer">
+                <option value="all">جميع أنواع المحتوى</option>
+                <option value="text">يحتوي على نص</option>
+                <option value="image">يحتوي على صور</option>
+                <option value="audio">يحتوي على صوت</option>
+                <option value="video">يحتوي على فيديو</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-500 mb-1">اتجاه الاتصال:</label>
+              <select id="filter-direction" class="px-3 py-2 bg-zinc-50 border-2 border-zinc-300 focus:border-black rounded-xl text-xs font-extrabold text-black outline-none cursor-pointer">
+                <option value="all">الكل (أحادي وثنائي)</option>
+                <option value="one-way">أحادي الاتجاه فقط</option>
+                <option value="two-way">ثنائي الاتجاه (تفاعلي)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-500 mb-1">الحاجة للإنترنت:</label>
+              <select id="filter-internet" class="px-3 py-2 bg-zinc-50 border-2 border-zinc-300 focus:border-black rounded-xl text-xs font-extrabold text-black outline-none cursor-pointer">
+                <option value="all">الكل</option>
+                <option value="yes">يتطلب إنترنت</option>
+                <option value="no">لا يتطلب إنترنت</option>
+              </select>
+            </div>
+
+            <div class="flex items-end">
+              <button id="reset-filters-btn" class="px-3.5 py-2 bg-zinc-200 hover:bg-black hover:text-white rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+                إعادة ضبط
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- الجدول المتجاوب -->
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full text-right border-collapse">
+            <thead>
+              <tr class="bg-black text-white text-xs sm:text-sm">
+                <th class="p-3.5 rounded-tr-xl font-extrabold">الوسيلة الإعلامية</th>
+                <th class="p-3.5 font-extrabold text-center">نص</th>
+                <th class="p-3.5 font-extrabold text-center">صور</th>
+                <th class="p-3.5 font-extrabold text-center">صوت</th>
+                <th class="p-3.5 font-extrabold text-center">فيديو</th>
+                <th class="p-3.5 font-extrabold">اتجاه الاتصال</th>
+                <th class="p-3.5 font-extrabold">الإنترنت</th>
+                <th class="p-3.5 rounded-tl-xl font-extrabold">نقطة القوة الرئيسية</th>
+              </tr>
+            </thead>
+            <tbody id="comparison-table-body" class="divide-y divide-zinc-200 text-xs sm:text-sm">
+              <!-- يتم ملؤها ديناميكياً عبر JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        <div id="no-filter-results" class="hidden text-center py-8 text-zinc-500 font-bold text-sm">
+          لا توجد وسيلة تطابق جميع شروط التصفية المختارة معاً. جرب تغيير الخيارات.
+        </div>
+      </div>
+
+      <!-- 2.2 أداة تفاعلية: مستشار اختيار الوسيلة (Media Selector Simulator) -->
+      <div class="bg-white border-2 border-black rounded-2xl p-6 sm:p-8 shadow-mono-hard">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b-2 border-zinc-100">
+          <div class="w-11 h-11 bg-black text-white rounded-xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+          </div>
+          <div>
+            <span class="text-xs font-extrabold text-zinc-500">محاكي اتخاذ القرار الهندسي</span>
+            <h2 class="text-xl sm:text-2xl font-black text-black">مستشار اختيار الوسيلة (Media Selector Simulator)</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- لوحة الإدخال -->
+          <div class="lg:col-span-5 space-y-5 bg-zinc-50 p-5 rounded-2xl border border-zinc-300">
+            <div>
+              <label for="sim-goal" class="block text-sm font-black text-black mb-2">
+                1. ما هو الغرض الأساسي من رسالتك؟
+              </label>
+              <select id="sim-goal" class="w-full p-3 bg-white border-2 border-zinc-300 focus:border-black rounded-xl text-xs sm:text-sm font-bold text-black outline-none cursor-pointer">
+                <option value="breaking">نشر خبر عاجل أو إعلان عام لجمهور عريض جداً</option>
+                <option value="detailed">شرح مواصفات تقنية تفصيلية وجداول وأسعار</option>
+                <option value="private">إرسال إشعار خاص ومباشر لعملاء أو مرضى مسجلين</option>
+                <option value="viral">تحفيز التفاعل والانتشار بالتناقل الشفهي</option>
+                <option value="campaign">إطلاق حملة شاملة لمنتج أو فعالية كبرى</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="sim-audience" class="block text-sm font-black text-black mb-2">
+                2. من هو الجمهور المستهدف؟
+              </label>
+              <select id="sim-audience" class="w-full p-3 bg-white border-2 border-zinc-300 focus:border-black rounded-xl text-xs sm:text-sm font-bold text-black outline-none cursor-pointer">
+                <option value="general">جمهور عام متنوع الأعمار والاهتمامات</option>
+                <option value="youth">شباب وطلاب يستخدمون الهواتف الذكية باستمرار</option>
+                <option value="offline">عائلات أو كبار سن لا يملكون إنترنت منزلي</option>
+                <option value="drivers">مواطنون في الشوارع وأثناء القيادة</option>
+                <option value="registered">أشخاص مسجلون مسبقاً في قاعدة البيانات</option>
+              </select>
+            </div>
+
+            <button id="run-simulator-btn" class="w-full py-3.5 px-5 bg-black hover:bg-zinc-800 text-white font-extrabold text-sm rounded-xl shadow-mono-hard-sm transition-all cursor-pointer flex items-center justify-center gap-2">
+              <span>تحليل واقتراح الخطة الإعلامية</span>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- لوحة النتائج والتوصية الهندسية -->
+          <div id="simulator-output" class="lg:col-span-7 bg-white border-2 border-black rounded-2xl p-6 flex flex-col justify-between">
+            <!-- يتم تحديث المحتوى ديناميكياً -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- التبويب الثالث: تحديات وتفكير هندسي                                     -->
+    <!-- ========================================================================= -->
+    <section id="tab-3" class="tab-panel space-y-10 hidden fade-in">
+
+      <!-- 3.1 بطاقات "توقف وفكر" من الكتاب المدرسي -->
+      <div>
+        <div class="mb-6">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-500">مناقشات الكتاب المدرسي</span>
+          <h2 class="text-2xl font-black text-black">بطاقات أسئلة "توقف وفكر"</h2>
+          <p class="text-xs sm:text-sm text-zinc-600 mt-1">فكر في السؤال جيداً ثم اضغط على زر إظهار الإجابة النموذجية للتحقق من فهمك.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="stop-and-think-container">
+          <!-- البطاقة 1 -->
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-6 shadow-mono flex flex-col justify-between">
+            <div>
+              <div class="inline-block px-2.5 py-1 bg-black text-white text-xs font-bold rounded mb-3">توقف وفكر • 1</div>
+              <h3 class="text-base sm:text-lg font-black text-black mb-4 leading-relaxed">
+                لماذا لا تكفي "الصحيفة" وحدها لنشر تحذير عاجل عن عاصفة جوية ستضرب المدينة خلال ساعة؟
+              </h3>
+            </div>
+            <div>
+              <button onclick="toggleReveal('sat-1', this)" class="w-full py-2.5 px-4 bg-zinc-100 hover:bg-black hover:text-white border border-zinc-300 rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+                إظهار الإجابة النموذجية والشرح
+              </button>
+              <div id="sat-1" class="hidden mt-4 p-4 bg-zinc-900 text-white rounded-xl text-xs sm:text-sm leading-relaxed">
+                <strong class="block text-zinc-300 mb-1">الإجابة النموذجية:</strong>
+                لأن الصحيفة وسيلة مطبوعة تصدر في مواعيد ثابتة (يومية) وتحتاج وقتاً للطباعة والتوزيع، كما لا يقرأها الجميع في نفس اللحظة. في الحالات العاجلة نحتاج لوسائل البث الفوري مثل <span class="underline font-bold">التلفزيون، الراديو، وإشعارات الهواتف</span> للوصول لعدد كبير في آنٍ واحد.
+              </div>
+            </div>
+          </div>
+
+          <!-- البطاقة 2 -->
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-6 shadow-mono flex flex-col justify-between">
+            <div>
+              <div class="inline-block px-2.5 py-1 bg-black text-white text-xs font-bold rounded mb-3">توقف وفكر • 2</div>
+              <h3 class="text-base sm:text-lg font-black text-black mb-4 leading-relaxed">
+                أنشأت شركة ناشئة موقعاً إلكترونياً رائعاً لمنتجاتها، لكن عدد الزوار كان ضعيفاً جداً في الشهر الأول. ما السبب من واقع قيود المواقع الإلكترونية؟
+              </h3>
+            </div>
+            <div>
+              <button onclick="toggleReveal('sat-2', this)" class="w-full py-2.5 px-4 bg-zinc-100 hover:bg-black hover:text-white border border-zinc-300 rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+                إظهار الإجابة النموذجية والشرح
+              </button>
+              <div id="sat-2" class="hidden mt-4 p-4 bg-zinc-900 text-white rounded-xl text-xs sm:text-sm leading-relaxed">
+                <strong class="block text-zinc-300 mb-1">الإجابة النموذجية:</strong>
+                لأن من قيود المواقع الإلكترونية أنها تعتمد على <span class="underline font-bold">أسلوب الجذب (بحث المستخدم عنها)</span> ولا تفرض نفسها على الجمهور. الحل الهندسي هو دمج وسائل تواصل اجتماعي أو إعلانات لتوجيه الجمهور إلى رابط الموقع.
+              </div>
+            </div>
+          </div>
+
+          <!-- البطاقة 3 -->
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-6 shadow-mono flex flex-col justify-between">
+            <div>
+              <div class="inline-block px-2.5 py-1 bg-black text-white text-xs font-bold rounded mb-3">توقف وفكر • 3</div>
+              <h3 class="text-base sm:text-lg font-black text-black mb-4 leading-relaxed">
+                ما الفرق الجوهري في "اتجاه الاتصال" بين التلفزيون ووسائل التواصل الاجتماعي؟ وكيف يؤثر ذلك على المؤسسات؟
+              </h3>
+            </div>
+            <div>
+              <button onclick="toggleReveal('sat-3', this)" class="w-full py-2.5 px-4 bg-zinc-100 hover:bg-black hover:text-white border border-zinc-300 rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+                إظهار الإجابة النموذجية والشرح
+              </button>
+              <div id="sat-3" class="hidden mt-4 p-4 bg-zinc-900 text-white rounded-xl text-xs sm:text-sm leading-relaxed">
+                <strong class="block text-zinc-300 mb-1">الإجابة النموذجية:</strong>
+                التلفزيون <span class="underline font-bold">أحادي الاتجاه</span> (ينقل الرسالة من المرسل للمشاهد فقط)، بينما وسائل التواصل الاجتماعي <span class="underline font-bold">ثنائية الاتجاه</span> تتيح للجمهور التعليق وطرح الأسئلة ومشاركة المحتوى، مما يمنح المؤسسات تغذية راجعة فورية.
+              </div>
+            </div>
+          </div>
+
+          <!-- البطاقة 4 -->
+          <div class="bg-white border-2 border-zinc-300 rounded-2xl p-6 shadow-mono flex flex-col justify-between">
+            <div>
+              <div class="inline-block px-2.5 py-1 bg-black text-white text-xs font-bold rounded mb-3">توقف وفكر • 4</div>
+              <h3 class="text-base sm:text-lg font-black text-black mb-4 leading-relaxed">
+                متى يكون إرسال "رسالة نصية أو بريد إلكتروني" أفضل من نشر إعلان على وسائل التواصل الاجتماعي؟
+              </h3>
+            </div>
+            <div>
+              <button onclick="toggleReveal('sat-4', this)" class="w-full py-2.5 px-4 bg-zinc-100 hover:bg-black hover:text-white border border-zinc-300 rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+                إظهار الإجابة النموذجية والشرح
+              </button>
+              <div id="sat-4" class="hidden mt-4 p-4 bg-zinc-900 text-white rounded-xl text-xs sm:text-sm leading-relaxed">
+                <strong class="block text-zinc-300 mb-1">الإجابة النموذجية:</strong>
+                عندما يكون الغرض هو <span class="underline font-bold">إيصال معلومات لأشخاص محددين</span> بدقة (مثل تأكيد حجز، نتيجة اختبار طالب، أو إشعار خاص لعملاء محددين) دون الحاجة لنشرها للعامة.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3.2 نشاط "فكر كمهندس: حملة مكتبة عامة لبرنامج قراءة مجاني" -->
+      <div class="bg-white border-2 border-black rounded-2xl p-6 sm:p-8 shadow-mono-hard">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b-2 border-zinc-100 mb-6">
+          <div>
+            <span class="px-3 py-1 bg-black text-white text-xs font-black rounded-md">نشاط تفاعلي خطوة بخطوة</span>
+            <h2 class="text-xl sm:text-2xl font-black text-black mt-2">فكر كمهندس: حملة مكتبة عامة لبرنامج قراءة مجاني</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 mt-1">
+              تريد مكتبة عامة الترويج لبرنامج قراءة صيفي مجاني. ساعد فريق التخطيط في اختيار الوسيلة المثالية لكل فئة من الجمهور، ثم حدد خطة الدمج الإعلامي.
+            </p>
+          </div>
+        </div>
+
+        <!-- الخطوة 1: تحليل فئات الجمهور الثلاث -->
+        <div class="space-y-6">
+          <h3 class="text-base font-black text-black">الخطوة الأولى: اختر الوسيلة الأنسب لكل شريحة من الجمهور المستهدف</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- الفئة 1: عائلة بلا إنترنت منزلي -->
+            <div class="bg-zinc-50 border-2 border-zinc-300 rounded-xl p-5">
+              <div class="text-xs font-bold text-zinc-500 mb-1">الشريحة الأولى</div>
+              <h4 class="text-base font-black text-black mb-2">عائلة لا تملك إنترنت منزلي</h4>
+              <p class="text-xs text-zinc-600 mb-4">تعتمد الأسرة على الوسائل التقليدية في الحي والمنزل لمعرفة الأنشطة المجتمعية.</p>
+              <select id="eng-aud-1" class="w-full p-2.5 bg-white border-2 border-zinc-300 focus:border-black rounded-lg text-xs font-bold outline-none cursor-pointer">
+                <option value="">-- اختر الوسيلة الأنسب --</option>
+                <option value="website">الموقع الإلكتروني للمكتبة فقط</option>
+                <option value="print">الصحيفة المحلية والملصقات/النشرات الورقية</option>
+                <option value="social">منشورات على منصات التواصل الاجتماعي</option>
+              </select>
+              <div id="eng-feedback-1" class="mt-3 text-xs font-bold hidden"></div>
+            </div>
+
+            <!-- الفئة 2: طالب شاب -->
+            <div class="bg-zinc-50 border-2 border-zinc-300 rounded-xl p-5">
+              <div class="text-xs font-bold text-zinc-500 mb-1">الشريحة الثانية</div>
+              <h4 class="text-base font-black text-black mb-2">طالب في المرحلة الثانوية</h4>
+              <p class="text-xs text-zinc-600 mb-4">يستخدم هاتفه الذكي يومياً ويتفاعل مع أصدقائه ويرغب في التسجيل السريع.</p>
+              <select id="eng-aud-2" class="w-full p-2.5 bg-white border-2 border-zinc-300 focus:border-black rounded-lg text-xs font-bold outline-none cursor-pointer">
+                <option value="">-- اختر الوسيلة الأنسب --</option>
+                <option value="radio">إعلان إذاعي في الراديو الصباحي</option>
+                <option value="newspaper">مقال مطول في صحيفة ورقية</option>
+                <option value="social_web">وسائل التواصل الاجتماعي + رابط التسجيل بالموقع</option>
+              </select>
+              <div id="eng-feedback-2" class="mt-3 text-xs font-bold hidden"></div>
+            </div>
+
+            <!-- الفئة 3: أمين مكتبة / موظف -->
+            <div class="bg-zinc-50 border-2 border-zinc-300 rounded-xl p-5">
+              <div class="text-xs font-bold text-zinc-500 mb-1">الشريحة الثالثة</div>
+              <h4 class="text-base font-black text-black mb-2">أمين مكتبة ومشرفو الأنشطة</h4>
+              <p class="text-xs text-zinc-600 mb-4">يحتاجون لتعليمات تنظيمية دقيقة وجداول زمنية محددة لإدارة البرنامج.</p>
+              <select id="eng-aud-3" class="w-full p-2.5 bg-white border-2 border-zinc-300 focus:border-black rounded-lg text-xs font-bold outline-none cursor-pointer">
+                <option value="">-- اختر الوسيلة الأنسب --</option>
+                <option value="email">البريد الإلكتروني الداخلي ودليل إرشادي على الموقع</option>
+                <option value="tv">إعلان تلفزيوني عام</option>
+                <option value="flyer">ملصق دعائي مختصر</option>
+              </select>
+              <div id="eng-feedback-3" class="mt-3 text-xs font-bold hidden"></div>
+            </div>
+          </div>
+
+          <!-- الخطوة 2: اختيار خطة الدمج الإعلامي -->
+          <div class="bg-zinc-100 border-2 border-zinc-300 rounded-xl p-5">
+            <h3 class="text-base font-black text-black mb-2">الخطوة الثانية: ما هي أفضل خطة تكامل للوسائط (Media Mix) لإنجاح الحملة بالكامل؟</h3>
+            <div class="space-y-2.5 mt-3">
+              <label class="flex items-start gap-3 p-3 bg-white border border-zinc-300 rounded-xl cursor-pointer hover:border-black">
+                <input type="radio" name="eng-mix" value="wrong1" class="mt-1 accent-black">
+                <span class="text-xs sm:text-sm font-bold text-zinc-800">الاكتفاء بإنشاء صفحة على الموقع الإلكتروني للمكتبة وانتظار قيام الأهالي والطلاب بالبحث عنها.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 bg-white border border-zinc-300 rounded-xl cursor-pointer hover:border-black">
+                <input type="radio" name="eng-mix" value="correct" class="mt-1 accent-black">
+                <span class="text-xs sm:text-sm font-bold text-zinc-800">نشر ملصقات ورقية وإعلان بالصحيفة المحلية للعائلات بدون إنترنت + حملة على وسائل التواصل لجذب الطلاب وتوجيههم إلى الموقع الإلكتروني للتفاصيل والتسجيل + بريد إلكتروني لأمناء المكتبات.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 bg-white border border-zinc-300 rounded-xl cursor-pointer hover:border-black">
+                <input type="radio" name="eng-mix" value="wrong2" class="mt-1 accent-black">
+                <span class="text-xs sm:text-sm font-bold text-zinc-800">بث إعلان في الراديو فقط لمدة يوم واحد دون توفير أي وسيلة للتسجيل أو معرفة تفاصيل الكتب.</span>
+              </label>
+            </div>
+
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+              <button id="check-engineer-activity" class="px-6 py-3 bg-black hover:bg-zinc-800 text-white text-xs sm:text-sm font-extrabold rounded-xl shadow-mono-hard-sm cursor-pointer">
+                تقييم الحل الهندسي
+              </button>
+              <div id="eng-final-result" class="text-xs sm:text-sm font-extrabold"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3.3 مسألة تطبيق عملي + سؤال على نمط الامتحان (6 درجات) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- مسألة تطبيق عملي: المستشفى -->
+        <div class="bg-white border-2 border-zinc-300 rounded-2xl p-6 shadow-mono flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-3 py-1 bg-zinc-200 text-black text-xs font-extrabold rounded-lg">تطبيق عملي</span>
+              <span class="text-xs font-bold text-zinc-500">دراسة حالة</span>
+            </div>
+            <h3 class="text-lg font-black text-black mb-3">
+              مستشفى يريد إبلاغ المرضى بمواعيد العمل الجديدة للعيادات الخارجية
+            </h3>
+            <p class="text-xs sm:text-sm text-zinc-600 leading-relaxed mb-4">
+              قرر مستشفى عام تعديل مواعيد عمل العيادات الخارجية بدءاً من الأسبوع القادم. يراجع المستشفى شرائح مختلفة من المرضى (شباب يستخدمون الإنترنت، كبار سن لا يستخدمون الهواتف الذكية، ومرضى لديهم مواعيد محجوزة مسبقاً).
+              <br><strong class="text-black mt-2 block">المطلوب:</strong> اقترح خطة تواصل متكاملة تضمن وصول المعلومة لجميع المرضى دون استثناء.
+            </p>
+          </div>
+
+          <div>
+            <button onclick="toggleReveal('hospital-solution', this)" class="w-full py-3 px-4 bg-black hover:bg-zinc-800 text-white rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+              عرض الحل الهندسي المقترح
+            </button>
+            <div id="hospital-solution" class="hidden mt-4 p-4 bg-zinc-50 border-2 border-black rounded-xl text-xs sm:text-sm space-y-2 text-zinc-800">
+              <p><strong class="text-black">1. للمرضى أصحاب الحجوزات المسبقة (أشخاص محددون):</strong> إرسال رسائل نصية قصيرة (SMS) أو رسائل بريد إلكتروني مخصصة بموعدهم الجديد.</p>
+              <p><strong class="text-black">2. للجمهور العام ومستخدمي الإنترنت (معلومات تفصيلية):</strong> تحديث جدول المواعيد على الموقع الإلكتروني الرسمي للمستشفى ونشر تنويه على صفحات التواصل الاجتماعي.</p>
+              <p><strong class="text-black">3. لكبار السن ومن لا يملكون إنترنت:</strong> وضع لوحات إرشادية واضحة عند مداخل المستشفى والإعلان في الصحيفة المحلية أو الإذاعة المحلية.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- سؤال على نمط الامتحان (6 درجات) -->
+        <div class="bg-white border-2 border-black rounded-2xl p-6 shadow-mono-hard flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-3 py-1 bg-black text-white text-xs font-extrabold rounded-lg">سؤال على نمط الامتحان</span>
+              <span class="px-3 py-1 bg-zinc-100 border border-zinc-300 text-black text-xs font-black rounded-lg">الدرجة: 6 درجات</span>
+            </div>
+            <h3 class="text-base sm:text-lg font-black text-black mb-3 leading-relaxed">
+              "تُعد المواقع الإلكترونية ركيزة أساسية في العصر الرقمي، إلا أنها لا تغني عن الوسائط الأخرى بمفردها."
+            </h3>
+            <ol class="text-xs sm:text-sm text-zinc-700 font-bold space-y-1.5 list-decimal list-inside mb-4">
+              <li>اذكر ثلاث نقاط قوة للمواقع الإلكترونية. (3 درجات)</li>
+              <li>وضح قيدين من قيود المواقع الإلكترونية. (درجتان)</li>
+              <li>كيف يمكن التغلب على قيد صعوبة وصول الجمهور للموقع؟ (درجة واحدة)</li>
+            </ol>
+          </div>
+
+          <div>
+            <button onclick="toggleReveal('exam-rubric', this)" class="w-full py-3 px-4 bg-zinc-900 hover:bg-zinc-700 text-white rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+              إظهار نموذج الإجابة وتوزيع الدرجات
+            </button>
+            <div id="exam-rubric" class="hidden mt-4 p-4 bg-zinc-100 border-2 border-zinc-400 rounded-xl text-xs space-y-2.5 text-zinc-900">
+              <div>
+                <span class="inline-block px-2 py-0.5 bg-black text-white font-bold rounded mb-1">أولاً: نقاط القوة (3 درجات - درجة لكل نقطة):</span>
+                <p>• الجمع بين وسائط متعددة (نص، صورة، صوت، فيديو). • تقديم معلومات تفصيلية وغنية. • سهولة التحديث الفوري والتوافر على مدار الساعة (24/7).</p>
+              </div>
+              <div>
+                <span class="inline-block px-2 py-0.5 bg-black text-white font-bold rounded mb-1">ثانياً: القيود (درجتان - درجة لكل قيد):</span>
+                <p>• يتطلب بحث المستخدم عنه للوصول إليه (أسلوب الجذب). • يشترط توفر اتصال بالإنترنت وجهاز رقمي (لا يصل لغير المتصلين).</p>
+              </div>
+              <div>
+                <span class="inline-block px-2 py-0.5 bg-black text-white font-bold rounded mb-1">ثالثاً: الحل (درجة واحدة):</span>
+                <p>• استخدام تكامل الوسائط (Media Mix) مثل الترويج لرابط الموقع عبر وسائل التواصل الاجتماعي أو الإعلانات التلفزيونية والمطبوعة.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- التبويب الرابع: الاختبار الشامل وبطاقة الدرجات                            -->
+    <!-- ========================================================================= -->
+    <section id="tab-4" class="tab-panel space-y-8 hidden fade-in">
+
+      <!-- رأس الاختبار وشريط التقدم -->
+      <div class="bg-white border-2 border-black rounded-2xl p-6 shadow-mono">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-500">التقييم الذاتي الشامل</span>
+            <h2 class="text-2xl font-black text-black">اختبار الدرس 4-1: أنواع الوسائط وخصائصها</h2>
+            <p class="text-xs sm:text-sm text-zinc-600">15 سؤالاً متنوعاً (صح وخطأ، اختيار من متعدد، تصنيف المواقف، واستنتاج هندسي) بتصحيح فوري.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="bg-zinc-100 border border-zinc-300 px-4 py-2 rounded-xl text-center">
+              <div class="text-[11px] font-bold text-zinc-500">الأسئلة المجابة</div>
+              <div id="quiz-progress-text" class="text-base font-black text-black">0 / 15</div>
+            </div>
+            <button id="restart-quiz-btn" class="px-4 py-3 bg-zinc-200 hover:bg-black hover:text-white rounded-xl text-xs font-extrabold transition-colors cursor-pointer">
+              إعادة الاختبار
+            </button>
+          </div>
+        </div>
+
+        <!-- شريط التقدم المرئي -->
+        <div class="w-full h-3 bg-zinc-200 rounded-full overflow-hidden">
+          <div id="quiz-progress-bar" class="h-full bg-black transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- حاوية الأسئلة الـ 15 -->
+      <div id="quiz-questions-container" class="space-y-5">
+        <!-- يتم توليد الأسئلة ديناميكياً عبر JavaScript -->
+      </div>
+
+      <!-- زر إنهاء الاختبار وإصدار الشهادة -->
+      <div class="bg-white border-2 border-black rounded-2xl p-6 text-center shadow-mono">
+        <p id="quiz-incomplete-warning" class="hidden text-xs sm:text-sm font-extrabold text-black bg-zinc-200 px-4 py-2 rounded-xl mb-4 inline-block">
+          يرجى الإجابة على جميع الأسئلة الـ 15 أولاً لإصدار بطاقة الدرجات الرسمية!
+        </p>
+        <div>
+          <button id="finish-quiz-btn" class="px-8 py-4 bg-black hover:bg-zinc-800 text-white font-black text-base rounded-xl shadow-mono-hard-sm transition-all cursor-pointer inline-flex items-center gap-3">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>اعتماد النتيجة وإصدار بطاقة الدرجات والشهادة</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== بطاقة الدرجات وشهادة الإتمام الرسمية ==================== -->
+      <div id="certificate-section" class="hidden pt-4 fade-in">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4 no-print">
+          <h3 class="text-xl font-black text-black">بطاقة الدرجات وشهادة الإتمام الرسمية</h3>
+          <button onclick="window.print()" class="px-5 py-2.5 bg-black hover:bg-zinc-800 text-white text-xs sm:text-sm font-extrabold rounded-xl shadow-mono-hard-sm flex items-center gap-2 cursor-pointer">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="6 9 6 2 18 2 18 9"/>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+              <rect x="6" y="14" width="12" height="8"/>
+            </svg>
+            <span>طباعة الشهادة / حفظ كـ PDF</span>
+          </button>
+        </div>
+
+        <!-- قالب الشهادة القابل للطباعة -->
+        <div id="printable-certificate" class="bg-white border-4 border-double border-black rounded-2xl p-6 sm:p-10 shadow-mono-lg relative overflow-hidden">
+          <!-- زخارف زوايا هندسية -->
+          <div class="w-8 h-8 border-t-4 border-r-4 border-black absolute top-3 right-3"></div>
+          <div class="w-8 h-8 border-t-4 border-l-4 border-black absolute top-3 left-3"></div>
+          <div class="w-8 h-8 border-b-4 border-r-4 border-black absolute bottom-3 right-3"></div>
+          <div class="w-8 h-8 border-b-4 border-l-4 border-black absolute bottom-3 left-3"></div>
+
+          <!-- ترويسة الشهادة -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b-2 border-black text-center sm:text-right">
+            <div class="flex items-center gap-3">
+              <div class="w-14 h-14 bg-black text-white rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <rect x="4" y="4" width="24" height="24" rx="4" />
+                  <path d="M10 12L14 16L10 20" stroke-linecap="round" stroke-linejoin="round" />
+                  <line x1="16" y1="20" x2="22" y2="20" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-lg font-black text-black">م. محمد سلامة</h4>
+                <p class="text-xs font-bold text-zinc-600">البرمجة والذكاء الاصطناعي • الصف الثاني الثانوي</p>
+              </div>
+            </div>
+            <div class="text-center sm:text-left">
+              <span class="px-3 py-1 bg-black text-white text-xs font-extrabold rounded">وثيقة تقييم واجتياز</span>
+              <p id="cert-date" class="text-xs font-bold text-zinc-600 mt-1.5">التاريخ: --/--/----</p>
+            </div>
+          </div>
+
+          <!-- متن الشهادة -->
+          <div class="py-8 text-center space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-black text-black">شهادة إتمام وبطاقة درجات</h2>
+            <p class="text-sm text-zinc-600 font-semibold">تشهد منصة المراجعة التفاعلية لمادة البرمجة والذكاء الاصطناعي بأن الطالب/ـة:</p>
+            
+            <div class="py-2 px-6 bg-zinc-100 border-2 border-black rounded-xl inline-block max-w-full">
+              <span id="cert-student-name" class="text-xl sm:text-3xl font-black text-black break-words">اسم الطالب</span>
+            </div>
+
+            <p class="text-sm sm:text-base text-zinc-700 font-bold max-w-2xl mx-auto leading-relaxed">
+              قد أتم بنجاح مراجعة وتقييم <span class="text-black font-black underline">الدرس 4-1: أنواع الوسائط وخصائصها</span> من الوحدة الرابعة (تصميم الويب والوسائط) للعام الدراسي 2026 / 2027.
+            </p>
+          </div>
+
+          <!-- جدول الدرجات التفصيلي -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
+            <div class="bg-zinc-50 border-2 border-black rounded-xl p-4 text-center">
+              <div class="text-xs font-bold text-zinc-500 mb-1">الدرجة النهائية</div>
+              <div id="cert-score" class="text-2xl sm:text-3xl font-black text-black">0 / 15</div>
+            </div>
+            <div class="bg-zinc-50 border-2 border-black rounded-xl p-4 text-center">
+              <div class="text-xs font-bold text-zinc-500 mb-1">النسبة المئوية</div>
+              <div id="cert-percentage" class="text-2xl sm:text-3xl font-black text-black">0%</div>
+            </div>
+            <div class="bg-black text-white border-2 border-black rounded-xl p-4 text-center">
+              <div class="text-xs font-bold text-zinc-300 mb-1">التقدير العام</div>
+              <div id="cert-grade" class="text-2xl sm:text-3xl font-black">--</div>
+            </div>
+          </div>
+
+          <!-- التوقيع والختم -->
+          <div class="pt-6 border-t-2 border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-zinc-600">
+            <div>
+              <span class="block text-black font-black text-sm">إشراف واعتماد:</span>
+              <span>المهندس محمد سلامة — معلم البرمجة والذكاء الاصطناعي</span>
+            </div>
+            <div class="px-4 py-2 border-2 border-dashed border-black rounded-lg text-black font-black">
+              معتمد إلكترونياً • 2026/2027
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- تذييل الصفحة العام -->
+  <footer id="main-footer" class="bg-white border-t-2 border-black py-5 mt-12 hidden no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-bold text-zinc-600">
+      <div>منصة المراجعة التفاعلية • <span class="text-black font-black">م. محمد سلامة</span> • البرمجة والذكاء الاصطناعي (الصف الثاني الثانوي 2026/2027)</div>
+      <div>الوحدة الرابعة: الدرس 4-1 (أنواع الوسائط وخصائصها)</div>
+    </div>
+  </footer>
+
+  <!-- ==================== الأكواد البرمجية والتفاعلية (JavaScript) ==================== -->
+  <script>
+    // ==================== 1. إدارة حالة الطالب (localStorage) ====================
+    const STORAGE_KEY = 'msalama_sec2_lesson4_1_student';
+
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const mainHeader = document.getElementById('main-header');
+    const mainContent = document.getElementById('main-content');
+    const mainFooter = document.getElementById('main-footer');
+    const loginForm = document.getElementById('login-form');
+    const studentNameInput = document.getElementById('student-name-input');
+    const nameError = document.getElementById('name-error');
+    const headerStudentName = document.getElementById('header-student-name');
+    const certStudentName = document.getElementById('cert-student-name');
+
+    // تحديث اسم الطالب في كافة المواضع
+    function applyStudentName(name) {
+      const cleanName = name.trim();
+      localStorage.setItem(STORAGE_KEY, cleanName);
+      headerStudentName.textContent = cleanName;
+      certStudentName.textContent = cleanName;
+      
+      welcomeScreen.classList.add('hidden');
+      mainHeader.classList.remove('hidden');
+      mainContent.classList.remove('hidden');
+      mainFooter.classList.remove('hidden');
+    }
+
+    // التحقق عند تحميل الصفحة من وجود اسم محفوظ مسبقاً
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedName = localStorage.getItem(STORAGE_KEY);
+      if (savedName && savedName.trim().length >= 3) {
+        studentNameInput.value = savedName;
+        applyStudentName(savedName);
+      }
+      renderComparisonTable();
+      updateSimulator();
+      renderQuiz();
+    });
+
+    // معالجة تسجيل الدخول
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = studentNameInput.value.trim();
+      if (val.length < 3) {
+        nameError.classList.remove('hidden');
+        return;
+      }
+      nameError.classList.add('hidden');
+      applyStudentName(val);
+    });
+
+    // تعديل اسم الطالب من الرأس
+    const editNameModal = document.getElementById('edit-name-modal');
+    const modalNameInput = document.getElementById('modal-name-input');
+    document.getElementById('edit-name-btn').addEventListener('click', () => {
+      modalNameInput.value = localStorage.getItem(STORAGE_KEY) || '';
+      editNameModal.classList.remove('hidden');
+      editNameModal.classList.add('flex');
+      modalNameInput.focus();
+    });
+
+    document.getElementById('cancel-edit-name').addEventListener('click', () => {
+      editNameModal.classList.add('hidden');
+      editNameModal.classList.remove('flex');
+    });
+
+    document.getElementById('save-edit-name').addEventListener('click', () => {
+      const newName = modalNameInput.value.trim();
+      if (newName.length >= 3) {
+        applyStudentName(newName);
+        editNameModal.classList.add('hidden');
+        editNameModal.classList.remove('flex');
+      }
+    });
+
+    // ==================== 2. التنقل بين التبويبات الأربعة ====================
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-tab');
+
+        // تحديث أزرار التبويبات
+        tabButtons.forEach(b => {
+          b.classList.remove('bg-black', 'text-white', 'shadow-mono-hard-sm');
+          b.classList.add('bg-zinc-100', 'text-zinc-700', 'border', 'border-zinc-300');
+        });
+        btn.classList.remove('bg-zinc-100', 'text-zinc-700', 'border', 'border-zinc-300');
+        btn.classList.add('bg-black', 'text-white', 'shadow-mono-hard-sm');
+
+        // إظهار المحتوى المطلوب
+        tabPanels.forEach(panel => {
+          if (panel.id === targetId) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // ==================== 3. التبويب الثاني: جدول المقارنة التفاعلي ====================
+    const mediaData = [
+      {
+        name: 'التلفزيون (Television)',
+        text: true,
+        image: true,
+        audio: true,
+        video: true,
+        direction: 'one-way',
+        directionLabel: 'أحادي الاتجاه ←',
+        internet: 'no',
+        internetLabel: 'لا يتطلب إنترنت',
+        strength: 'الوصول لجمهور عريض جداً بالصوت والصورة في آنٍ واحد'
+      },
+      {
+        name: 'الراديو (Radio)',
+        text: false,
+        image: false,
+        audio: true,
+        video: false,
+        direction: 'one-way',
+        directionLabel: 'أحادي الاتجاه ←',
+        internet: 'no',
+        internetLabel: 'لا يتطلب إنترنت',
+        strength: 'الاستماع أثناء القيادة والعمل ونقل الأخبار السريعة'
+      },
+      {
+        name: 'الصحيفة (Newspaper)',
+        text: true,
+        image: true,
+        audio: false,
+        video: false,
+        direction: 'one-way',
+        directionLabel: 'أحادي الاتجاه ←',
+        internet: 'no',
+        internetLabel: 'لا يتطلب إنترنت',
+        strength: 'تقديم تحليلات وتفاصيل مكتوبة دون الحاجة لأجهزة إلكترونية'
+      },
+      {
+        name: 'الموقع الإلكتروني (Website)',
+        text: true,
+        image: true,
+        audio: true,
+        video: true,
+        direction: 'two-way',
+        directionLabel: 'ثنائي الاتجاه ↔',
+        internet: 'yes',
+        internetLabel: 'يتطلب إنترنت',
+        strength: 'دمج كافة الوسائط وتقديم تفاصيل غنية وتحديث فوري 24/7'
+      },
+      {
+        name: 'وسائل التواصل الاجتماعي',
+        text: true,
+        image: true,
+        audio: true,
+        video: true,
+        direction: 'two-way',
+        directionLabel: 'ثنائي الاتجاه وتفاعلي ↔',
+        internet: 'yes',
+        internetLabel: 'يتطلب إنترنت',
+        strength: 'التفاعل الفوري والانتشار السريع بالتناقل الشفهي'
+      }
+    ];
+
+    const filterContent = document.getElementById('filter-content');
+    const filterDirection = document.getElementById('filter-direction');
+    const filterInternet = document.getElementById('filter-internet');
+    const tableBody = document.getElementById('comparison-table-body');
+    const noFilterResults = document.getElementById('no-filter-results');
+
+    function checkIcon(val) {
+      if (val) {
+        return `<span class="inline-flex items-center justify-center w-6 h-6 bg-black text-white rounded-md font-black text-xs">✓</span>`;
+      }
+      return `<span class="inline-flex items-center justify-center w-6 h-6 bg-zinc-100 text-zinc-400 rounded-md font-bold text-xs">—</span>`;
+    }
+
+    function renderComparisonTable() {
+      const cVal = filterContent.value;
+      const dVal = filterDirection.value;
+      const iVal = filterInternet.value;
+
+      const filtered = mediaData.filter(item => {
+        if (cVal !== 'all' && !item[cVal]) return false;
+        if (dVal !== 'all' && item.direction !== dVal) return false;
+        if (iVal !== 'all' && item.internet !== iVal) return false;
+        return true;
+      });
+
+      tableBody.innerHTML = '';
+      if (filtered.length === 0) {
+        noFilterResults.classList.remove('hidden');
+        return;
+      }
+      noFilterResults.classList.add('hidden');
+
+      filtered.forEach(item => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-zinc-50 transition-colors';
+        row.innerHTML = `
+          <td class="p-3.5 font-black text-black whitespace-nowrap">${item.name}</td>
+          <td class="p-3.5 text-center">${checkIcon(item.text)}</td>
+          <td class="p-3.5 text-center">${checkIcon(item.image)}</td>
+          <td class="p-3.5 text-center">${checkIcon(item.audio)}</td>
+          <td class="p-3.5 text-center">${checkIcon(item.video)}</td>
+          <td class="p-3.5 whitespace-nowrap">
+            <span class="px-2.5 py-1 rounded-md text-xs font-extrabold ${item.direction === 'two-way' ? 'bg-black text-white' : 'bg-zinc-200 text-zinc-800'}">
+              ${item.directionLabel}
+            </span>
+          </td>
+          <td class="p-3.5 whitespace-nowrap font-bold text-zinc-700">${item.internetLabel}</td>
+          <td class="p-3.5 text-zinc-700 font-medium leading-relaxed">${item.strength}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    [filterContent, filterDirection, filterInternet].forEach(el => {
+      el.addEventListener('change', renderComparisonTable);
+    });
+
+    document.getElementById('reset-filters-btn').addEventListener('click', () => {
+      filterContent.value = 'all';
+      filterDirection.value = 'all';
+      filterInternet.value = 'all';
+      renderComparisonTable();
+    });
+
+    // ==================== 4. التبويب الثاني: مستشار اختيار الوسيلة (Simulator) ====================
+    const simGoal = document.getElementById('sim-goal');
+    const simAudience = document.getElementById('sim-audience');
+    const simulatorOutput = document.getElementById('simulator-output');
+
+    function updateSimulator() {
+      const goal = simGoal.value;
+      const audience = simAudience.value;
+
+      let primaryMedia = '';
+      let mixPlan = '';
+      let justification = '';
+
+      // منطق التوصية الهندسية بناءً على قواعد المنهج
+      if (audience === 'offline') {
+        primaryMedia = 'الصحيفة المحلية + الملصقات الورقية + الراديو/التلفزيون';
+        mixPlan = 'توزيع نشرات مطبوعة في أماكن التجمع + إعلان في صحيفة محلية أو إذاعة محلية، مع توفير رقم هاتف للاستفسار.';
+        justification = 'لأن من قيود المواقع الإلكترونية ووسائل التواصل اشتراط توفر الإنترنت وجهاز رقمي؛ لذا يجب استخدام وسائط تقليدية لا تحتاج لإنترنت للوصول لهذه الفئة.';
+      } else if (audience === 'drivers') {
+        primaryMedia = 'الراديو (الإذاعة) + لوحات الطرق';
+        mixPlan = 'بث رسالة صوتية قصيرة وواضحة عبر الإذاعة مع ذكر اسم الموقع الإلكتروني أو رقم مختصر للرجوع إليه لاحقاً.';
+        justification = 'الراديو هو الوسيلة الوحيدة التي تنقل المعلومات بالصوت فقط دون الحاجة لتركيز بصري، مما يجعله مثالياً أثناء القيادة.';
+      } else if (goal === 'private' || audience === 'registered') {
+        primaryMedia = 'البريد الإلكتروني (Email) أو الرسائل النصية الخاصة (SMS)';
+        mixPlan = 'إرسال رسالة مخصصة تحتوي على بيانات الشخص المعني ورابط مباشر لصفحة التفاصيل على الموقع الإلكتروني.';
+        justification = 'عندما يكون الغرض إيصال معلومات لأشخاص محددين بدقة، تكون وسائل الاتصال المباشر والشخصي أفضل وأكثر خصوصية من البث العام.';
+      } else if (goal === 'detailed') {
+        primaryMedia = 'الموقع الإلكتروني الرسمي (Website)';
+        mixPlan = 'إنشاء صفحة منظمة على الموقع تضم الجداول والمواصفات والفيديوهات، ثم نشر رابطها عبر وسائل التواصل الاجتماعي لجذب الزوار.';
+        justification = 'يتميز الموقع الإلكتروني بالقدرة على تقديم معلومات غنية وتفصيلية ودمج وسائط متعددة، بينما تعالج وسائل التواصل قيد صعوبة الوصول للموقع.';
+      } else if (goal === 'viral' || audience === 'youth') {
+        primaryMedia = 'وسائل التواصل الاجتماعي (Social Media)';
+        mixPlan = 'نشر فيديو قصير تفاعلي يشجع على المشاركة والتعليق، مع وضع رابط الموقع الإلكتروني في الوصف لإتمام التسجيل أو معرفة التفاصيل.';
+        justification = 'وسائل التواصل ثنائية الاتجاه وتتميز بالانتشار السريع بالتناقل الشفهي، خاصة بين فئة الشباب.';
+      } else if (goal === 'breaking') {
+        primaryMedia = 'التلفزيون + الراديو + التنبيهات العاجلة على منصات التواصل';
+        mixPlan = 'بث الخبر العاجل فوراً عبر نشرات التلفزيون والراديو للوصول لأكبر عدد في آنٍ واحد، مع تحديث التفاصيل لحظياً على الموقع الإلكتروني.';
+        justification = 'التلفزيون والراديو يحققان هدف إعلام عدد كبير جداً من الناس في نفس اللحظة بسرعة فائقة.';
+      } else {
+        primaryMedia = 'خطة تكامل الوسائط المتكاملة (Full Media Mix)';
+        mixPlan = 'إعلان تلفزيوني/إذاعي لجذب الانتباه العام ← توجيه الجمهور إلى الموقع الإلكتروني لمعرفة التفاصيل والتسجيل ← تفعيل وسائل التواصل الاجتماعي للانتشار بالتناقل الشفهي.';
+        justification = 'دمج الوسائط يجمع بين قوة الانتشار الواسع للتلفزيون، وعمق التفاصيل في الموقع الإلكتروني، والتفاعلية في وسائل التواصل الاجتماعي.';
+      }
+
+      simulatorOutput.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-zinc-200 pb-3">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-zinc-500">التوصية الهندسية المثالية</span>
+            <span class="px-2.5 py-1 bg-black text-white text-xs font-bold rounded">مُعتمد وفق المنهج</span>
+          </div>
+          
+          <div>
+            <div class="text-xs font-bold text-zinc-500 mb-1">الوسيلة / الوسائط الأساسية المقترحة:</div>
+            <h3 class="text-lg sm:text-xl font-black text-black bg-zinc-100 p-3.5 rounded-xl border border-zinc-300">
+              ${primaryMedia}
+            </h3>
+          </div>
+
+          <div>
+            <div class="text-xs font-bold text-zinc-500 mb-1">خطة تكامل الوسائط (Media Mix):</div>
+            <p class="text-xs sm:text-sm font-bold text-zinc-800 leading-relaxed bg-zinc-50 p-3.5 rounded-xl border border-zinc-200">
+              ${mixPlan}
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-zinc-200">
+          <div class="text-xs font-black text-black mb-1">التبرير العلمي من الدرس 4-1:</div>
+          <p class="text-xs text-zinc-600 leading-relaxed font-medium">
+            ${justification}
+          </p>
+        </div>
+      `;
+    }
+
+    document.getElementById('run-simulator-btn').addEventListener('click', updateSimulator);
+    simGoal.addEventListener('change', updateSimulator);
+    simAudience.addEventListener('change', updateSimulator);
+
+    // ==================== 5. التبويب الثالث: دوال التفاعل والتحديات ====================
+    function toggleReveal(elementId, btn) {
+      const el = document.getElementById(elementId);
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+        btn.textContent = 'إخفاء الإجابة';
+      } else {
+        el.classList.add('hidden');
+        btn.textContent = 'إظهار الإجابة النموذجية والشرح';
+      }
+    }
+
+    // تقييم نشاط "فكر كمهندس: حملة المكتبة العامة"
+    document.getElementById('check-engineer-activity').addEventListener('click', () => {
+      const a1 = document.getElementById('eng-aud-1').value;
+      const a2 = document.getElementById('eng-aud-2').value;
+      const a3 = document.getElementById('eng-aud-3').value;
+      const mixRadio = document.querySelector('input[name="eng-mix"]:checked');
+
+      const fb1 = document.getElementById('eng-feedback-1');
+      const fb2 = document.getElementById('eng-feedback-2');
+      const fb3 = document.getElementById('eng-feedback-3');
+      const finalRes = document.getElementById('eng-final-result');
+
+      let score = 0;
+
+      // تقييم الشريحة 1
+      fb1.classList.remove('hidden');
+      if (a1 === 'print') {
+        fb1.textContent = '✓ ممتاز! الوسائل الورقية لا تحتاج إنترنت وتصل للعائلة بسهولة.';
+        fb1.className = 'mt-3 text-xs font-extrabold text-black bg-zinc-200 p-2 rounded-lg';
+        score++;
+      } else {
+        fb1.textContent = '✗ تذكر أن العائلة لا تملك إنترنت منزلي، لذا الصحيفة والملصقات هي الأنسب.';
+        fb1.className = 'mt-3 text-xs font-bold text-zinc-700 bg-zinc-100 p-2 rounded-lg border border-zinc-300';
+      }
+
+      // تقييم الشريحة 2
+      fb2.classList.remove('hidden');
+      if (a2 === 'social_web') {
+        fb2.textContent = '✓ صحيح! وسائل التواصل تجذب الطالب وتوجهه للموقع للتسجيل.';
+        fb2.className = 'mt-3 text-xs font-extrabold text-black bg-zinc-200 p-2 rounded-lg';
+        score++;
+      } else {
+        fb2.textContent = '✗ الطلاب يتفاعلون رقمياً؛ الأنسب وسائل التواصل الاجتماعي مع رابط الموقع.';
+        fb2.className = 'mt-3 text-xs font-bold text-zinc-700 bg-zinc-100 p-2 rounded-lg border border-zinc-300';
+      }
+
+      // تقييم الشريحة 3
+      fb3.classList.remove('hidden');
+      if (a3 === 'email') {
+        fb3.textContent = '✓ أحسنت! البريد الإلكتروني يوصل المعلومات لأشخاص محددين بدقة.';
+        fb3.className = 'mt-3 text-xs font-extrabold text-black bg-zinc-200 p-2 rounded-lg';
+        score++;
+      } else {
+        fb3.textContent = '✗ أمناء المكتبات فئة محددة تحتاج لتعليمات تنظيمية عبر البريد الإلكتروني.';
+        fb3.className = 'mt-3 text-xs font-bold text-zinc-700 bg-zinc-100 p-2 rounded-lg border border-zinc-300';
+      }
+
+      // تقييم خطة الدمج
+      if (mixRadio && mixRadio.value === 'correct') {
+        score++;
+      }
+
+      if (score === 4) {
+        finalRes.textContent = '★ رائع يا مهندس! حققت 4/4 في تحليل الجمهور وتصميم خطة تكامل الوسائط.';
+        finalRes.className = 'text-xs sm:text-sm font-black text-white bg-black px-4 py-2 rounded-xl';
+      } else {
+        finalRes.textContent = `نتيجتك في النشاط: ${score} من 4 — راجع الملاحظات أعلاه وتأكد من اختيار خطة الدمج الشاملة.`;
+        finalRes.className = 'text-xs sm:text-sm font-extrabold text-black bg-zinc-200 px-4 py-2 rounded-xl';
+      }
+    });
+
+    // ==================== 6. التبويب الرابع: بنك الأسئلة الشامل (15 سؤالاً) ====================
+    const quizQuestions = [
+      {
+        id: 1,
+        type: 'صح أو خطأ',
+        question: 'يُعد التلفزيون وسيلة اتصال ثنائية الاتجاه تتيح للمشاهدين التفاعل المباشر وتعديل المحتوى المعروض.',
+        options: ['صواب', 'خطأ'],
+        correctIndex: 1,
+        explanation: 'خطأ؛ التلفزيون وسيلة اتصال أحادية الاتجاه تنقل المعلومات من المرسل إلى الجمهور دون تفاعل مباشر.'
+      },
+      {
+        id: 2,
+        type: 'صح أو خطأ',
+        question: 'تتميز الصحيفة بقدرتها على تقديم تفاصيل ومقالات مكتوبة دون الحاجة إلى اتصال بالإنترنت.',
+        options: ['صواب', 'خطأ'],
+        correctIndex: 0,
+        explanation: 'صواب؛ الصحيفة وسيلة مطبوعة تنقل النصوص والصور الثابتة ولا تتطلب إنترنت أو أجهزة إلكترونية.'
+      },
+      {
+        id: 3,
+        type: 'صح أو خطأ',
+        question: 'من نقاط القوة في المواقع الإلكترونية أنها تصل تلقائياً إلى جميع الناس دون الحاجة لأن يبحث المستخدم عنها.',
+        options: ['صواب', 'خطأ'],
+        correctIndex: 1,
+        explanation: 'خطأ؛ الاعتماد على بحث المستخدم للوصول إلى الموقع يُعد من (قيود) المواقع الإلكترونية وليس من نقاط قوتها.'
+      },
+      {
+        id: 4,
+        type: 'صح أو خطأ',
+        question: 'يُقصد بتكامل الوسائط (Media Mix) دمج أكثر من وسيلة إعلامية معاً بحيث تكمل نقاط قوة كل وسيلة قيود الوسيلة الأخرى.',
+        options: ['صواب', 'خطأ'],
+        correctIndex: 0,
+        explanation: 'صواب؛ مثل استخدام إعلان تلفزيوني لجذب الانتباه ثم توجيه الجمهور للموقع الإلكتروني لمعرفة التفاصيل.'
+      },
+      {
+        id: 5,
+        type: 'اختيار من متعدد',
+        question: 'أي من الوسائط التالية ينقل المعلومات في صورة "صوت فقط" مما يجعله مناسباً للاستماع أثناء القيادة؟',
+        options: ['الصحيفة', 'الراديو', 'الموقع الإلكتروني', 'الملصق الإعلاني'],
+        correctIndex: 1,
+        explanation: 'الراديو ينقل المعلومات بالصوت فقط ولا يتطلب تركيزاً بصرياً، لذا يناسب المستمعين أثناء القيادة أو العمل.'
+      },
+      {
+        id: 6,
+        type: 'اختيار من متعدد',
+        question: 'ما هي أنواع المعلومات التي يمكن للموقع الإلكتروني نقلها وعرضها للزوار؟',
+        options: [
+          'نصوص وصور ثابتة فقط',
+          'صوت وفيديو فقط',
+          'نصوص وصور وصوت وفيديو (وسائط متعددة)',
+          'نصوص مكتوبة دون وسائط مرئية'
+        ],
+        correctIndex: 2,
+        explanation: 'من أبرز نقاط القوة الخمس للمواقع الإلكترونية قدرتها على الجمع بين النصوص والصور والصوت والفيديو في مكان واحد.'
+      },
+      {
+        id: 7,
+        type: 'اختيار من متعدد',
+        question: 'كم عدد نقاط القوة وعدد القيود للمواقع الإلكترونية كما ورد في الدرس 4-1؟',
+        options: [
+          '3 نقاط قوة و 5 قيود',
+          '5 نقاط قوة و 3 قيود',
+          '4 نقاط قوة و 4 قيود',
+          'نقطتا قوة و 3 قيود'
+        ],
+        correctIndex: 1,
+        explanation: 'للمواقع الإلكترونية 5 نقاط قوة رئيسية (تعدد الوسائط، التفاصيل، التحديث الفوري، التوافر 24/7، التفاعلية) و 3 قيود.'
+      },
+      {
+        id: 8,
+        type: 'اختيار من متعدد',
+        question: 'أي مما يلي يُعد من القيود الثلاثة للمواقع الإلكترونية؟',
+        options: [
+          'صعوبة تحديث البيانات بعد نشرها',
+          'عدم القدرة على عرض مقاطع الفيديو',
+          'اشتراط توفر اتصال بالإنترنت وجهاز رقمي لدى المستخدم',
+          'عدم إمكانية تصفح الموقع ليلاً'
+        ],
+        correctIndex: 2,
+        explanation: 'يتطلب الوصول للموقع الإلكتروني توفر اتصال بالإنترنت وجهاز حاسوب أو هاتف ذكي، مما يحرم غير المتصلين بالإنترنت من الوصول إليه.'
+      },
+      {
+        id: 9,
+        type: 'تصنيف المواقف',
+        question: 'موقف: تريد وزارة الصحة نشر تحذير عاجل ومباشر لملايين المواطنين في نفس اللحظة. ما الوسيلة الأنسب؟',
+        options: [
+          'التلفزيون والراديو',
+          'تصميم موقع إلكتروني جديد وانتظار بحث الناس عنه',
+          'طباعة كتيب إرشادي وتوزيعه الشهر القادم',
+          'إرسال بريد إلكتروني فردي'
+        ],
+        correctIndex: 0,
+        explanation: 'لتحقيق غرض "إعلام عدد كبير من الناس في آنٍ واحد"، يُعد التلفزيون والراديو الخيار الأسرع والأوسع انتشاراً.'
+      },
+      {
+        id: 10,
+        type: 'تصنيف المواقف',
+        question: 'موقف: ترغب شركة في إرسال فاتورة شهرية وتفاصيل اشتراك خاصة لكل عميل مسجل لديها بشكل سري ومباشر. ما الوسيلة الأنسب؟',
+        options: [
+          'إعلان في التلفزيون العام',
+          'البريد الإلكتروني أو الرسائل النصية المخصصة',
+          'نشر الفواتير على صفحة عامة في وسائل التواصل',
+          'إعلان في الصحيفة اليومية'
+        ],
+        correctIndex: 1,
+        explanation: 'عندما يكون الغرض "إيصال معلومات لأشخاص محددين"، نستخدم البريد الإلكتروني أو الرسائل المباشرة.'
+      },
+      {
+        id: 11,
+        type: 'تصنيف المواقف',
+        question: 'موقف: أطلق مطعم جديد عرضاً ترويجياً ويريد تحفيز الزبائن على مشاركته مع أصدقائهم وتحقيق انتشار بالتناقل الشفهي. ما الوسيلة الأنسب؟',
+        options: [
+          'وسائل التواصل الاجتماعي',
+          'الراديو المحلي',
+          'الصحيفة الورقية',
+          'دليل الهاتف المطبوع'
+        ],
+        correctIndex: 0,
+        explanation: 'وسائل التواصل الاجتماعي تدعم الاتصال ثنائي الاتجاه والمشاركة الفورية، مما يحقق الانتشار بالتناقل الشفهي.'
+      },
+      {
+        id: 12,
+        type: 'تصنيف المواقف',
+        question: 'موقف: يريد طالب التعرف على الشروط التفصيلية والجدول الزمني الكامل لمسابقة البرمجة والذكاء الاصطناعي والتسجيل فيها. أين يجد ذلك؟',
+        options: [
+          'في إعلان تلفزيوني مدته 15 ثانية',
+          'في الموقع الإلكتروني الرسمي للمسابقة',
+          'في خبر إذاعي عابر',
+          'في ملصق شارع مختصر'
+        ],
+        correctIndex: 1,
+        explanation: 'الموقع الإلكتروني هو الأنسب لتقديم معلومات غنية وتفصيلية وتوفير نماذج التسجيل التفاعلية.'
+      },
+      {
+        id: 13,
+        type: 'استنتاج هندسي',
+        question: 'لماذا تقوم الشركات بوضع رابط موقعها الإلكتروني أو رمز (QR) في نهاية إعلاناتها التلفزيونية؟',
+        options: [
+          'لأن التلفزيون لا ينقل الصوت والصورة',
+          'للتغلب على قيد صعوبة وصول الجمهور للموقع بمفرده وتوجيههم للحصول على التفاصيل',
+          'لأن المواقع الإلكترونية لا تحتاج إلى إنترنت',
+          'لتقليل تكلفة تصميم الموقع'
+        ],
+        correctIndex: 1,
+        explanation: 'هذا تطبيق مباشر لمفهوم تكامل الوسائط (Media Mix)؛ يجذب التلفزيون الانتباه العام ثم يوجه المشاهد للموقع للتفاصيل.'
+      },
+      {
+        id: 14,
+        type: 'استنتاج هندسي',
+        question: 'أي من أزواج الوسائط التالية يتشارك في خاصية "الاتصال ثنائي الاتجاه"؟',
+        options: [
+          'التلفزيون والراديو',
+          'الصحيفة والتلفزيون',
+          'الموقع الإلكتروني ووسائل التواصل الاجتماعي',
+          'الراديو والصحيفة'
+        ],
+        correctIndex: 2,
+        explanation: 'كل من الموقع الإلكتروني (عبر النماذج والبحث والتعليقات) ووسائل التواصل الاجتماعي يتيحان تفاعلاً ثنائي الاتجاه مع المستخدم.'
+      },
+      {
+        id: 15,
+        type: 'استنتاج هندسي',
+        question: 'عند التخطيط لحملة توعية تستهدف سكان قرية نائية لا تتوفر بها خدمة الإنترنت بشكل منتظم، ما القرار الهندسي الصحيح؟',
+        options: [
+          'الاعتماد الكلي على وسائل التواصل الاجتماعي',
+          'دمج الوسائط غير المعتمدة على الإنترنت مثل الإذاعة والملصقات واللقاءات والصحف المحلية',
+          'إنشاء تطبيق هاتف ذكي يتطلب إنترنت فائق السرعة',
+          'إرسال رسائل بريد إلكتروني فقط'
+        ],
+        correctIndex: 1,
+        explanation: 'اختيار الوسيلة يجب أن يراعي خصائص الجمهور وظروفه؛ وبما أن الإنترنت غير متوفر، تُستبعد الوسائط الرقمية وتُستخدم الوسائط التقليدية.'
+      }
+    ];
+
+    let userAnswers = {};
+
+    const quizContainer = document.getElementById('quiz-questions-container');
+    const quizProgressText = document.getElementById('quiz-progress-text');
+    const quizProgressBar = document.getElementById('quiz-progress-bar');
+
+    function renderQuiz() {
+      quizContainer.innerHTML = '';
+      quizQuestions.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white border-2 border-zinc-300 rounded-2xl p-5 sm:p-6 shadow-mono transition-all';
+        card.id = `q-card-${q.id}`;
+
+        let optionsHtml = '';
+        q.options.forEach((opt, optIdx) => {
+          optionsHtml += `
+            <button 
+              type="button"
+              onclick="selectQuizOption(${q.id}, ${optIdx})"
+              id="q-${q.id}-opt-${optIdx}"
+              class="w-full text-right p-3.5 rounded-xl border-2 border-zinc-200 hover:border-black bg-zinc-50 hover:bg-white text-xs sm:text-sm font-bold text-black transition-all flex items-center justify-between gap-3 cursor-pointer"
+            >
+              <span>${opt}</span>
+              <span class="status-badge text-xs font-black"></span>
+            </button>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 bg-zinc-900 text-white text-xs font-extrabold rounded-md">
+              السؤال ${idx + 1} من ${quizQuestions.length}
+            </span>
+            <span class="px-2.5 py-1 bg-zinc-100 border border-zinc-300 text-zinc-700 text-xs font-bold rounded-md">
+              ${q.type}
+            </span>
+          </div>
+          <h3 class="text-base sm:text-lg font-black text-black mb-4 leading-relaxed">
+            ${q.question}
+          </h3>
+          <div class="space-y-2.5">
+            ${optionsHtml}
+          </div>
+          <div id="q-explanation-${q.id}" class="hidden mt-4 p-3.5 rounded-xl text-xs sm:text-sm font-bold leading-relaxed"></div>
+        `;
+
+        quizContainer.appendChild(card);
+      });
+      updateQuizProgress();
+    }
+
+    window.selectQuizOption = function(questionId, selectedIdx) {
+      // منع تغيير الإجابة بعد اختيارها لضمان مصداقية التقييم الفوري
+      if (userAnswers[questionId] !== undefined) return;
+
+      const question = quizQuestions.find(item => item.id === questionId);
+      userAnswers[questionId] = selectedIdx;
+
+      const isCorrect = selectedIdx === question.correctIndex;
+      const card = document.getElementById(`q-card-${questionId}`);
+      const explanationBox = document.getElementById(`q-explanation-${questionId}`);
+
+      // تحديث مظهر الخيارات
+      question.options.forEach((_, optIdx) => {
+        const btn = document.getElementById(`q-${questionId}-opt-${optIdx}`);
+        const badge = btn.querySelector('.status-badge');
+        btn.classList.remove('cursor-pointer', 'hover:border-black', 'hover:bg-white');
+        btn.disabled = true;
+
+        if (optIdx === question.correctIndex) {
+          btn.classList.remove('bg-zinc-50', 'border-zinc-200', 'text-black');
+          btn.classList.add('bg-black', 'border-black', 'text-white');
+          badge.textContent = '✓ الإجابة الصحيحة';
+        } else if (optIdx === selectedIdx && !isCorrect) {
+          btn.classList.remove('bg-zinc-50', 'border-zinc-200');
+          btn.classList.add('bg-zinc-200', 'border-zinc-500', 'line-through', 'text-zinc-700');
+          badge.textContent = '✗ اختيارك';
+        } else {
+          btn.classList.add('opacity-50');
+        }
+      });
+
+      // إظهار التفسير التعليمي
+      explanationBox.classList.remove('hidden');
+      if (isCorrect) {
+        card.classList.replace('border-zinc-300', 'border-black');
+        explanationBox.className = 'mt-4 p-3.5 rounded-xl text-xs sm:text-sm font-bold leading-relaxed bg-zinc-100 border-r-4 border-black text-black';
+        explanationBox.innerHTML = `<span>✓ أحسنت! </span>${question.explanation}`;
+      } else {
+        explanationBox.className = 'mt-4 p-3.5 rounded-xl text-xs sm:text-sm font-bold leading-relaxed bg-zinc-200 border-r-4 border-zinc-700 text-black';
+        explanationBox.innerHTML = `<span>! التوضيح: </span>${question.explanation}`;
+      }
+
+      updateQuizProgress();
+    };
+
+    function updateQuizProgress() {
+      const answeredCount = Object.keys(userAnswers).length;
+      const total = quizQuestions.length;
+      quizProgressText.textContent = `${answeredCount} / ${total}`;
+      quizProgressBar.style.width = `${(answeredCount / total) * 100}%`;
+    }
+
+    // إعادة الاختبار
+    document.getElementById('restart-quiz-btn').addEventListener('click', () => {
+      userAnswers = {};
+      document.getElementById('certificate-section').classList.add('hidden');
+      document.getElementById('quiz-incomplete-warning').classList.add('hidden');
+      renderQuiz();
+    });
+
+    // إنهاء الاختبار وإصدار بطاقة الدرجات والشهادة
+    document.getElementById('finish-quiz-btn').addEventListener('click', () => {
+      const answeredCount = Object.keys(userAnswers).length;
+      const total = quizQuestions.length;
+      const warningEl = document.getElementById('quiz-incomplete-warning');
+
+      if (answeredCount < total) {
+        warningEl.textContent = `لقد أجبت على ${answeredCount} من ${total} سؤالاً. يرجى الإجابة على باقي الأسئلة لإصدار الشهادة.`;
+        warningEl.classList.remove('hidden');
+        return;
+      }
+
+      warningEl.classList.add('hidden');
+
+      // حساب الدرجة
+      let correctCount = 0;
+      quizQuestions.forEach(q => {
+        if (userAnswers[q.id] === q.correctIndex) {
+          correctCount++;
+        }
+      });
+
+      const percentage = Math.round((correctCount / total) * 100);
+      let grade = '';
+      if (percentage >= 90) grade = 'ممتاز (A+)';
+      else if (percentage >= 80) grade = 'جيد جداً (A)';
+      else if (percentage >= 70) grade = 'جيد (B)';
+      else if (percentage >= 60) grade = 'مقبول (C)';
+      else grade = 'يحتاج مراجعة';
+
+      // تعبئة بيانات الشهادة
+      const savedName = localStorage.getItem(STORAGE_KEY) || 'طالب متميز';
+      document.getElementById('cert-student-name').textContent = savedName;
+      document.getElementById('cert-score').textContent = `${correctCount} / ${total}`;
+      document.getElementById('cert-percentage').textContent = `${percentage}%`;
+      document.getElementById('cert-grade').textContent = grade;
+
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString('ar-EG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('cert-date').textContent = `التاريخ: ${formattedDate}`;
+
+      const certSection = document.getElementById('certificate-section');
+      certSection.classList.remove('hidden');
+      certSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+</body>
+</html>
